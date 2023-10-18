@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flapping Brib</title>
+    <link rel="stylesheet" href="Style.css" />
+  </head>
+  <body>
+    <button onclick="FinishGame()" id="Finish-Game">Finish Game</button>
+    <div id="gameboard"></div>
+    <input type="text" id="InputField" placeholder="Cols,Rows,Mines" />
+    <button onclick="createMineBoard()">StartGame</button>
+    <button onclick="RevealMineBoard()">Reveal Board</button>
+    <div id="Selector-Button">
+      <p id="Flag-Button" onclick="SetMode(0)">F</p>
+      <p id="Reveal-Button" onclick="SetMode(1)">O</p>
+    </div>
+    <script src="Backend.js"></script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+#Cards-Section{
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    display: flex;
+    margin-bottom: 3%;
+    /* border :1px solid rgb(223, 235, 114); */
+}
+.Card{
+    display: flex;
+    border:3px solid rgb(174, 173, 173);
+    width: 10%;
+}
+.B-Sec,.I-Sec,.N-Sec,.G-Sec,.O-Sec{
+    text-align: center;
+    width: 20%;
+    border: 1px solid black;
+}
+.Card p{
+    background-color: aliceblue;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    border:1px solid black;
+}
+body{
+    background-color: blueviolet;
+}
+
+#MyLogo{
+    width: 100px;
+}
+
+#Top-Part{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 3%;
+}
+
+.GameSetter,#Check-Cards{
+    margin-right: 4%;
+    
+}
+
+#Secret{
+    display: flex;
+    justify-content: center;
+}
+
+#Bottom-Part{
+    justify-content: center;
+    display: flex;
+}

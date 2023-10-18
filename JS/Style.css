@@ -1,0 +1,54 @@
+#gameboard{
+    display: flex;
+    justify-content: center;
+    border: 3px solid red;
+    height: 400px;
+}
+
+#gameboard:hover{
+    border-color: aqua;
+}
+
+
+.MineCol{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.MineCol p{
+    text-align: center;
+    /* align-self: center; */
+    background-color: springgreen;
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+}
+.MineCol p:hover{
+    background-color: aqua;
+}
+
+#Selector-Button{
+    justify-content: center;
+    display: flex;
+    background-color: rgb(164, 190, 123);
+}
+#Flag-Button,#Reveal-Button{
+    height: 20px;
+    width: 20px;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+#Flag-Button{
+    margin-right: 3%;
+
+}
+
+#Flag-Button:hover,#Reveal-Button:hover{
+    background-color: rgb(95, 141, 78);
+}
+
+#Finish-Game{
+
+    display: none;
+}

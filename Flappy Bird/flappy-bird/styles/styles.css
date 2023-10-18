@@ -1,0 +1,99 @@
+* {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#bird-color-buttons {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.bird-color-button {
+    transition: filter 0.15s;
+    aspect-ratio: 1;
+    width: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+} .bird-color-button img {
+    width: 100%;
+} .bird-color-button:hover {
+    filter: brightness(0.75);
+} .bird-color-button:active {
+    filter: brightness(1.25);
+}
+
+#game-box {
+    display: grid;
+    grid-template-rows: 1fr 236px;
+    width: 100%;
+    height: 100%;
+    background: url("../images/background-day.png") center / auto 100% repeat-x;
+}
+
+#play-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#flappy {
+    position: absolute;
+    width: 72px;
+    height: 51px;
+    right: 50%;
+    bottom: 50%;
+    background-image: url('../images/yellowbird-upflap.png');
+    transition: bottom 0.15s, transform 0.15s;
+    animation: flappyIdleAnimation 1s linear infinite;
+}
+
+#pipes {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.pipe {
+    position: absolute;
+    width: 110px;
+    height: 675px;
+    background-image: url('../images/pipe-green.png');
+    left: 100%;
+    overflow: hidden;
+}
+
+#base {
+    width: 100%;
+    height: 236px;
+    position: absolute;
+    bottom: 0;
+    background: url("../images/base.png") 100% center/auto 100% repeat-x;
+}
+
+@keyframes flappyIdleAnimation {
+    0% {
+        top: 50%;
+    }
+    50% {
+        top: 52%;
+    }
+    100% {
+        top: 50%;
+    }
+}

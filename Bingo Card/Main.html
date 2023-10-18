@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BINGOOO</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script src="code.jquery.com_jquery-3.7.1.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="Style.css" />
+  </head>
+  <body>
+    <div id="Top-Part">
+      <div id="Logo">
+        <p id="PoweredLogo">Powered By</p>
+        <img src="Ajax.png" id="MyLogo" />
+      </div>
+      <p id="Current-Game-ID">Current Game Id:</p>
+      <button id="Get-Card">Get Card</button>
+    </div>
+    <div id="Cards-Section"></div>
+    <div id="Bottom-Part">
+      <div class="GameSetter">
+        <button id="IDButton">Set Game ID</button>
+        <input type="text" id="GameID" placeholder="Enter Game ID" />
+      </div>
+      <button id="Check-Cards" class="btn btn-info">Verify Cards</button>
+      <button id="GameBoard" class="btn btn-dark">Go To Global Ball</button>
+    </div>
+    <div id="Secret">
+      <p>Pssssst...... You have more than 1 Card</p>
+    </div>
+    <script src="BackEnd.js"></script>
+  </body>
+</html>

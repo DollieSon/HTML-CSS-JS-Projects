@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Click Event Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Attach the click event to a parent element (e.g., the body)
+        $("body").on("click", "p", function () {
+          alert("The dynamically created 'p' element was clicked!");
+          // You can replace the alert with any action you want.
+        });
+
+        // Dynamically create and append a 'p' element
+        $("#createButton").click(function () {
+          $("body").append("<p>Click me (dynamically created)</p>");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="createButton">Create 'p' Element</button>
+  </body>
+</html>
