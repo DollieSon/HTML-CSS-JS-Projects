@@ -1,4 +1,4 @@
-var ReadJSON;
+let ReadJSON;
 
 $(document).ready(function(){
     $.getJSON('./Jasons/Menu.json',function(res){
@@ -27,12 +27,12 @@ $(document).ready(function(){
     });
      $("#Create-Json").click(function(){
         console.log(ReadJSON);
-        Display();
+        let DataBlob = new Blob([JSON.stringify(ReadJSON)],{type: 'application/json'});
+        console.log(DataBlob);
+        $('#Download-Json').attr('href', URL.createObjectURL(DataBlob));
+        $('#Download-Json').css({
+            "display":"block"
+        });
      });
-
-    console.log("RJSON VAL:" + ReadJSON);
 });
 
-function AddItem(){
-    
-}
