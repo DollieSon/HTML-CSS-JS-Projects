@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplayer Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="Styler.css" />
+    <script src="Jquerry.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <p id="Current-ID">Current ID:NULL</p>
+      <p id="Player_Name">Name:NULL</p>
+    </div>
+    <div id="Input-Boxes">
+      <div id="Auth-Corner">
+        <p>Log-in</p>
+        <input
+          type="text"
+          placeholder="Enter First Name"
+          id="First-Name-Input"
+        />
+        <input type="text" placeholder="Enter Last Name" id="Last-Name-Input" />
+        <button id="Create-Player-Button">Create Account</button>
+      </div>
+      <input type="text" placeholder="Enter ID" id="ID-Input" />
+    </div>
+    <div id="Game-Corner">
+      <p id="Game-ID-Text">Game ID:</p>
+      <div id="Host-Game">
+        <button id="Create-Game">Create Game</button>
+      </div>
+      <div id="Join-Game">
+        <p>Join Game</p>
+        <input type="text" id="Join-By-ID" />
+        <button id="Join-Game-Button">Join Game</button>
+      </div>
+      <div id="Game-Box"></div>
+    </div>
+    <script src="BackEnd.js"></script>
+  </body>
+</html>
