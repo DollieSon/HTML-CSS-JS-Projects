@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="Jquerry.min.js"></script>
+    <link rel="stylesheet" href="Styler.css" />
+  </head>
+  <body>
+    <div id="Top Buttons">
+      <button id="Get_Posts">Get Posts</button>
+      <button id="Create_User">Create User</button>
+      <button id="Login">Login</button>
+      <input type="text" id="uname" placeholder="Enter Username" />
+      <textarea id="Post_Area" placeholder="Input Post"></textarea>
+      <button id="Send_Post">Post Post</button>
+      <button id="Delete_Post">Delete Post</button>
+    </div>
+    <div id="Posts_Section"></div>
+    <div id="User_Info"></div>
+    <script src="BackEnd.js"></script>
+  </body>
+</html>

@@ -1,6 +1,7 @@
 const ID_List = []
 let Current_Id = null
 let Game_ID = null
+let Game_start = 0;
 $(document).ready(function(){
     //Create Account
     $("#Create-Player-Button").on("click",function() {
@@ -13,6 +14,9 @@ $(document).ready(function(){
 
     $("#Join-Game-Button").on("click",function(){
         return JoinGame() 
+    })
+    $("#Board-Check").on("click",function(){
+        return Check_Game_State();
     })
 });
 
@@ -79,6 +83,8 @@ function CreateGame(){
             Game_ID = JSON.parse(data).id;
             console.log(JSON.parse(data));
             $("#Game-ID-Text").text(`Game ID: ${Game_ID}`);
+            $("#Tic-Tac-Toe").remove();
+            StartGame();
         },
         error:()=>{
             alert("Failed To Create Game ID");
@@ -114,13 +120,58 @@ function JoinGame(){
                 method:"POST",
                 data:{id:GameVal,note:`{"P":"P2","Msg":"Confirm"}`},
                 success:()=>{
+                    $("#Tic-Tac-Toe").remove();
+                    StartGame();
                     console.log("Confirmation Posted");
                 }
                 })
             }else{
                 alert("Game has Already Started OR Game ID Is INCorrect");
             }
-            debugger;
         }
     });
+}
+
+function StartGame(){
+    //make 3x3 grid
+    $("#Game-Box").append(`<div id="Tic-Tac-Toe"></div>`);
+    for(let x=0;x<3;x++){
+        $("#Tic-Tac-Toe").append(`<div id="R${x}"></div>`);
+        for(let y=0;y<3;y++){
+            $(`#R${x}`).append(`<div id="C${y}"><img id="Game-Img" src ></div>`);
+            $(`#R${x} #C${y}`).on("click",function(){
+                return Mark(x,y);
+            });
+        }
+    }
+    Game_start = 1;
+}
+
+function Mark(R,C){
+    console.log(`mark ${R} ${C}`)
+    if(Game_start == 0){
+        alert("Game Has Not Started Yet");
+        return;
+    }
+    if($(`#R${R} #C${C} img`).attr("src") == "" ){
+        $(`#R${R} #C${C} img`).css("display","flex");
+        $(`#R${R} #C${C} img`).attr("src","images/O.png") ;
+    }
+}
+
+function Check_Game_State(){
+    let Jason;
+    $.ajax({
+        url: `http://hyeumine.com/mynotes.php`,
+        method:"GET",
+        data:{id:Game_ID},
+        success:(something)=>{
+            Jason = JSON.parse(something).notes;
+            console.log(Jason);
+            if(Jason[1][0][0] == '{'){
+            console.log("Parse 2");
+            console.log(JSON.parse(Jason[1][0]));
+            }
+        }  
+    })
 }

@@ -1,0 +1,29 @@
+.PostBlock{
+    border: 2px solid black;
+}
+#Content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 90vh;
+    border: 2px solid black;
+    justify-content: space-around;
+}
+#LeftSide,#MiddleSide,#RightSide{
+    display: flex;
+    flex-direction: column;
+}
+#Posts-Container{
+    border: 2px dashed gray;
+    overflow: scroll;
+}
+#LeftSide{
+    width: 20%;
+}
+#MiddleSide{
+    width: 60%;
+
+}
+#RightSide{
+    width: 20%;
+}
