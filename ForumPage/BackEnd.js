@@ -103,7 +103,6 @@ function GetMainPost(){
             for(Indv of Forum_Posts){
                 //console.log(Indv);
                 ParseUsername(Indv);
-                test = DetectScipts(Indv);
             }
             console.log(Forum_Posts);
             LoadUsers();
@@ -295,8 +294,8 @@ function delayedFunc(index,Ulist){
 
 let Waiting =-1;
 function InfinatePosts(){
-    bound_reps = 5;
-    x = 300;
+    bound_reps = 1000;
+    x = 1;
     reps = 0;
     function RepeatFunction(){
         Uvals = Object.values(UserList).map(Number);
@@ -310,9 +309,15 @@ function InfinatePosts(){
         console.log(reps);
         if(reps >= bound_reps){
             clearInterval(MyID);
+            downloadList();
+            alert("Scrapping Done");
+        }if(reps%10 == 0){
+            GetMainPost();
+        }if(reps%100 == 0){
+            downloadList();
         }
     }
-    MyID = setInterval(RepeatFunction,1000);
+    MyID = setInterval(RepeatFunction,3000);
 }
 
 function randomString(length) {
