@@ -58,7 +58,9 @@ $(document).ready(function(){
         });
     });
     
-
+    $(`#GetFrom`).click(function(){
+        GetMainPost();
+    });
 });
 
 let Forum_Posts = [];
@@ -82,6 +84,26 @@ function GetPosts(pagenum){
                 ParseUsername(Indv);
                 test = DetectScipts(Indv);
                 createCards(test,"Posts");
+            }
+            console.log(Forum_Posts);
+            LoadUsers();
+            Waiting = 1;
+        }
+    });
+    return 1;
+}
+
+function GetMainPost(){
+    $.ajax({
+        url:`http://hyeumine.com/forumGetPosts.php`,
+        method:"Get",
+        success:(data)=>{
+            console.log(data);
+            Forum_Posts = JSON.parse(data);
+            for(Indv of Forum_Posts){
+                //console.log(Indv);
+                ParseUsername(Indv);
+                test = DetectScipts(Indv);
             }
             console.log(Forum_Posts);
             LoadUsers();
@@ -176,7 +198,20 @@ function PostText(num){
     });
 }
 
-function PostText(num,x,z){
+function AntiBotPost(num){
+    PostTextinfo =  $("#Post_Area").val();
+    $.ajax({
+        url:`http://hyeumine.com/forumNewPost.php`,
+        method:"Post",
+        data:{id:parseInt(num),post:randomString(10)},
+        success:(data)=>{
+            console.log(data);
+        }
+    });
+}
+
+
+function PostTextParse(num,x,z){
     PostTextinfo =  $("#Post_Area").val();
     console.log(num);
     $.ajax({
@@ -193,7 +228,7 @@ function PostText(num,x,z){
 }
 
 function DeletePost(){
-    PostText = toString($("#Post_Area").val());
+    PostTextx = toString($("#Post_Area").val());
     $.ajax({
         url:`http://hyeumine.com/ forumDeletePost.php`,
         method:"Post",
@@ -255,30 +290,37 @@ function PostToall(mylist){
 
 function delayedFunc(index,Ulist){
     console.log(index);
-    PostText(Ulist[index],1,1);
+    PostTextParse(Ulist[index],1,1);
 }
 
 let Waiting =-1;
 function InfinatePosts(){
-    reps = 2000;
-    x = 0;
-    thisreps = 0;
+    bound_reps = 5;
+    x = 300;
+    reps = 0;
     function RepeatFunction(){
-        PostText(++x);
-        PostText(++x);
-        PostText(++x);
-        PostText(++x);
-        thisreps+=1;
-        if(x == reps){
-            clearInterval(MyID);
-            console.log("done");
-            downloadList();
-        }if(thisreps%2 == 0){
-            GetPosts(1);
-        }if(thisreps%10 == 0){
-            downloadList();
+        Uvals = Object.values(UserList).map(Number);
+        while(Uvals.includes(x)){
+            console.log(`${x} already Exists`);
+            x++;
         }
         console.log(x);
+        reps++;
+        AntiBotPost(x++);
+        console.log(reps);
+        if(reps >= bound_reps){
+            clearInterval(MyID);
+        }
     }
-    MyID = setInterval(RepeatFunction,10000);
+    MyID = setInterval(RepeatFunction,1000);
 }
+
+function randomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  }
