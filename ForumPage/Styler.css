@@ -27,3 +27,30 @@
 #RightSide{
     width: 20%;
 }
+#Pages{
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+}
+#New_Pages{
+    height: 80%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+#UserInfo{
+    height: 20%;
+}
+#UserList{
+    height: 70%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+#AllUsers{
+    display: flex;
+    flex-direction: column;
+}
+#AllUsers div{
+    display: flex;
+}

@@ -1,3 +1,5 @@
+let Pages = 0;
+
 $(document).ready(function(){
     $("#Get_Posts").click(function(){
         console.log("Sending");
@@ -20,7 +22,22 @@ $(document).ready(function(){
         return DeletePost();
     });
 
+    $(`#Get_Page_New`).click(function(){
+        result = -1;
+        Pages++;
+        result = GetPosts(Pages);
+        while(result == -1){
+        };
+        if(result == 1){    
+            $(`#New_Pages`).append(`
+            <button onclick = "GetPosts(${Pages})">Page ${Pages}</button>
+        `   );
+        }
+    });
+
 });
+
+let Forum_Posts = [];
 
 function GetPosts(pagenum){
     $.ajax({
@@ -29,17 +46,24 @@ function GetPosts(pagenum){
         data:{page:pagenum},
         success:(data)=>{
             console.log(data);
-            Forum_Posts  =  JSON.parse(data);
             $("#Posts").remove();
             $("#Posts-Container").append(`<div id="Posts"></div>`);
+            Forum_Posts = JSON.parse(data);
+            if(Forum_Posts.length == 0){
+                alert("No Pages Left");
+                return 0;
+            }
             for(Indv of Forum_Posts){
                 //console.log(Indv);
+                ParseUsername(Indv);
                 test = DetectScipts(Indv);
                 createCards(test,"Posts");
             }
             console.log(Forum_Posts);
+            LoadUsers();
         }
     });
+    return 1;
 }
 
 function DetectScipts(info){
@@ -67,7 +91,7 @@ function createCards(info,base){
     `);
     $(`#${info.id}`).append(`
     <p>${postinfo}</p>
-    <p>${info.user} -- ${info.date}</p>
+    <p>User: ${info.user}   Date: ${info.date}    ID: ${info.id}</p>
     `);
 
 }
@@ -89,6 +113,7 @@ function CreateUser(){
             console.log(data);
         }
     });
+    UserData
 }
 
 function Login(){
@@ -115,6 +140,7 @@ function Login(){
             UserData = res.user;
         }
     });
+    console.log("AJAX DONE -------");
 }
 
 function PostText(){
@@ -139,4 +165,33 @@ function DeletePost(){
             console.log(data);
         }
     });
+}
+
+let UserList = {
+};
+
+
+function sanitizeString(input) {
+    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/ /g,'-' ).replace(/\./g,'-' );
+}
+
+function ParseUsername(postList){
+    if(!(Object.keys(UserList).includes(postList.user))){
+        UserList[sanitizeString(postList.user).slice(0,20)] = '-1';
+    }
+}
+
+function LoadUsers(){
+    sanitized = "";
+    $("#AllUsers").remove();
+    $("#UserList").append(`<form id="AllUsers"></form>`);
+    for(user of Object.keys(UserList)){
+        sanitized = user;
+        $(`#AllUsers`).append(`
+            <div id="div${sanitized}"><input type="checkbox" id="cb_${sanitized}"></div>
+        `);
+        $(`#div`+sanitized).append(`
+            <label for="cb_${sanitized}">${sanitized}</label>
+        `);
+    }
 }
