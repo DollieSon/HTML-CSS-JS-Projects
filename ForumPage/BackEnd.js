@@ -1,5 +1,6 @@
 let Pages = 0;
-
+let List_Users;
+let UserList = {};
 $(document).ready(function(){
     $("#Get_Posts").click(function(){
         console.log("Sending");
@@ -15,7 +16,9 @@ $(document).ready(function(){
     });
 
     $("#Send_Post").click(function(){
-        return PostText();
+        PostText(1);
+        PostText(2);
+        PostText(3);
     });
 
     $("#Delete_Post").click(function(){
@@ -34,6 +37,27 @@ $(document).ready(function(){
         `   );
         }
     });
+
+    $(`#collect_data`).click(function(){
+        downloadList(UserList);
+    });
+
+    $(`#Post_All`).click(function(){
+        PostToall(UserList);
+    });
+    $(`#infposts`).click(function(){
+        InfinatePosts();
+    });
+    $(`#LoadUsers`).click(function(){
+        $.getJSON(`Users.json`,function(PureJSON){
+            UserList = PureJSON;
+            LoadUsers();
+        }).done(function(){
+            console.log("Done");
+            LoadUsers();
+        });
+    });
+    
 
 });
 
@@ -61,6 +85,7 @@ function GetPosts(pagenum){
             }
             console.log(Forum_Posts);
             LoadUsers();
+            Waiting = 1;
         }
     });
     return 1;
@@ -82,16 +107,12 @@ function DetectScipts(info){
 
 
 function createCards(info,base){
-    postinfo = info.post;
-    if(postinfo[0] == "<"){
-        postinfo = "Blocked";
-    }
     $(`#${base}`).append(`
-        <div id = "${info.id}" class = "PostBlock"></div>    
+        <div id = "${sanitizeString(info.id)}" class = "PostBlock"></div>    
     `);
     $(`#${info.id}`).append(`
-    <p>${postinfo}</p>
-    <p>User: ${info.user}   Date: ${info.date}    ID: ${info.id}</p>
+    <p>${sanitizeString(info.post)}</p>
+    <p>User: ${sanitizeString(info.user)}   Date: ${sanitizeString(info.date)}    ID: ${sanitizeString(info.id)}</p>
     `);
 
 }
@@ -143,14 +164,30 @@ function Login(){
     console.log("AJAX DONE -------");
 }
 
-function PostText(){
+function PostText(num){
     PostTextinfo =  $("#Post_Area").val();
     $.ajax({
         url:`http://hyeumine.com/forumNewPost.php`,
         method:"Post",
-        data:{id:UserData.id,post:PostTextinfo},
+        data:{id:parseInt(num),post:PostTextinfo},
         success:(data)=>{
             console.log(data);
+        }
+    });
+}
+
+function PostText(num,x,z){
+    PostTextinfo =  $("#Post_Area").val();
+    console.log(num);
+    $.ajax({
+        url:`http://hyeumine.com/forumNewPost.php`,
+        method:"Post",
+        data:{id:parseInt(num),post:PostTextinfo},
+        success:(data)=>{
+            console.log(data);
+            if(x == z){
+                alert("All Done");
+            }
         }
     });
 }
@@ -167,17 +204,17 @@ function DeletePost(){
     });
 }
 
-let UserList = {
-};
 
 
 function sanitizeString(input) {
-    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/ /g,'-' ).replace(/\./g,'-' );
+    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/,/g, '&#44;').replace(/\./g, '.').replace(/@/g, 'q').replace(/ /g, '&nbsp;');
 }
-
+function sanitizeString2(input) {
+    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/,/g, '&#44;').replace(/\./g, '.').replace(/@/g, 'q').replace(/ /g, '-');
+}
 function ParseUsername(postList){
     if(!(Object.keys(UserList).includes(postList.user))){
-        UserList[sanitizeString(postList.user).slice(0,20)] = '-1';
+        UserList[postList.user] = postList.uid;
     }
 }
 
@@ -186,12 +223,62 @@ function LoadUsers(){
     $("#AllUsers").remove();
     $("#UserList").append(`<form id="AllUsers"></form>`);
     for(user of Object.keys(UserList)){
-        sanitized = user;
+        console.log(user);
+        sanitized = sanitizeString2(user);
         $(`#AllUsers`).append(`
-            <div id="div${sanitized}"><input type="checkbox" id="cb_${sanitized}"></div>
+            <div id="${UserList[user]}"><input type="checkbox" id="cb_${sanitized}"></div>
         `);
-        $(`#div`+sanitized).append(`
+        $(`#${UserList[user]}`).append(`
             <label for="cb_${sanitized}">${sanitized}</label>
         `);
     }
+}
+
+function downloadList(theObject){
+    console.log(theObject);
+    MyBlob = new Blob([JSON.stringify(theObject)],{type:"application/json"});
+    linkelem = document.createElement(`a`);
+    linkelem.href = URL.createObjectURL(MyBlob);
+    linkelem.download = `UserList.json`;
+    $('#Download-Data').append(linkelem);
+    linkelem.click();
+}
+
+function PostToall(mylist){
+    timeoutTime = 0;
+    console.log(mylist);
+    console.log(mylist.asd);
+    for(some in mylist){
+        setTimeout(delayedFunc(some,mylist),7500 * (timeoutTime++));
+    }
+}
+
+function delayedFunc(index,Ulist){
+    console.log(index);
+    PostText(Ulist[index],1,1);
+}
+
+let Waiting =-1;
+function InfinatePosts(){
+    reps = 2000;
+    x = 0;
+    thisreps = 0;
+    function RepeatFunction(){
+        PostText(++x);
+        PostText(++x);
+        PostText(++x);
+        PostText(++x);
+        thisreps+=1;
+        if(x == reps){
+            clearInterval(MyID);
+            console.log("done");
+            downloadList();
+        }if(thisreps%2 == 0){
+            GetPosts(1);
+        }if(thisreps%10 == 0){
+            downloadList();
+        }
+        console.log(x);
+    }
+    MyID = setInterval(RepeatFunction,10000);
 }
