@@ -65,6 +65,8 @@ function GetPosts(pagenum){
         method:"Get",
         data:{page:pagenum},
         success:(data)=>{
+            ReplyingPost = [];
+            ReplyCount = 0;
             console.log(data);
             $("#Posts").remove();
             $("#Posts-Container").append(`<div id="Posts"></div>`);
@@ -127,27 +129,72 @@ function DetectScipts(info){
 }
 
 let Card_Numbers = 0;
+let ReplyingPost = [];
+let ReplyCount = 0;
 function createCards(info,base){
+    hasReplies = 0;
     $(`#${base}`).append(`
         <div id = "${sanitizeString(info.id)}" class = "card"></div>    
     `);
+    if(Object.keys(info).includes("reply")){
+        ReplyingPost.push(info.reply); 
+        console.log("has Replies");
+        hasReplies = 1;
+    }
     $(`#${info.id}`).append(`
-    <div id = ${info.id}>
+    <div id = "div${info.id}">
     <p class = "card-title">${sanitizeString(info.post)}</p>
     <p>User: ${sanitizeString(info.user)}   Date: ${sanitizeString(info.date)}    ID: ${sanitizeString(info.id)}</p>
     </div>
     <div class = "Post_Buttons"> 
     <button class = "btn btn-primary" onclick = "ReplyPost(${parseInt(info.id)})">Reply</button>
     <button class  = "btn btn-primary" onclick = "DeletePost(${parseInt(info.id)})">Delete</button>
-    <button class  = "btn btn-primary" onclick = "LoadReplies(${Current_Page},)">GetReplies</button>
     </div>
     `);
+    if(hasReplies){
+        $(`#${info.id} .Post_Buttons`).append(`
+            <button class  = "btn btn-primary" onclick = "LoadPostReplies(${ReplyCount++},${info.id})">GetReplies</button>
+        `);
+    }
 }
 
-function LoadReplies(PostIndex){
-    console.log(Post)
+function LoadPostReplies(PostIndex,AppendID){
+    $(`.CardContainer`).remove();
+    
+    console.log(ReplyingPost[PostIndex]);
+    RepPost = ReplyingPost[PostIndex];
+    console.log(RepPost);
+    $(`#Posts #div${AppendID}`).append(`
+    <div class = "CardContainer"></div>
+    `);
+    for(infos of RepPost){
+        console.log(infos);
+        console.log(AppendID);
+        $(`.CardContainer`).append(`
+        <div class="reply_card">
+            <p>Replied: ${infos.reply}</p>
+            <p>User: ${infos.user}</p>
+            <button onclick = "DeleteReplyPost(${infos.id})">Delete Reply</button>
+        <div>
+        `);
+
+    }
+    
+
 }
 
+function DeleteReplyPost(PostID){
+    console.log(PostID);
+    $.ajax({
+        url:`http://hyeumine.com/forumDeleteReply.php`,
+        method:"Get",
+        data:{id:parseInt(PostID)},
+        success:(data)=>{
+            console.log(data);
+        }
+    });
+
+}
 
 function UpdateUserDataText(){
     $(`#User_Name`).text(`Name: ${sanitizeString2(UserData.username)}`);
@@ -156,12 +203,14 @@ function UpdateUserDataText(){
 
 function ReplyPost(PostID){
     PostTextinfo =  $("#Post_Area").val();
+    console.log(`Replying:` + PostTextinfo);
     UserID = parseInt(UserData.id);
     console.log(UserID);
+    PID =parseInt(PostID);
     $.ajax({
         url:`http://hyeumine.com/forumReplyPost.php`,
-        method:"Get",
-        data:{user_id:UserID,post_id:PostID,reply:PostTextinfo},
+        method:"Post",
+        data:{user_id:UserID,post_id:parseInt(PostID),reply:PostTextinfo},
         success:(data)=>{
             console.log(data);
         }
@@ -263,7 +312,7 @@ function DeletePost(PostID){
     console.log(PostID);
     $.ajax({
         url:`http://hyeumine.com/forumDeletePost.php`,
-        method:"Post",
+        method:"Get",
         data:{id:parseInt(PostID)},
         success:(data)=>{
             console.log(data);
