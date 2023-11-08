@@ -2,12 +2,8 @@ let Pages = 0;
 let List_Users;
 let UserList = {};
 let GeneratedTexts = [];
+let Current_Page = [];
 $(document).ready(function(){
-    $("#Get_Posts").click(function(){
-        console.log("Sending");
-        return GetPosts(1);
-    });
-
     $("#Create_User").click(function() {
         return CreateUser();
     });
@@ -17,14 +13,10 @@ $(document).ready(function(){
     });
 
     $("#Send_Post").click(function(){
-        PostText(1);
-        PostText(2);
-        PostText(3);
+        PostText(UserData.id);
     });
 
-    $("#Delete_Post").click(function(){
-        return DeletePost();
-    });
+    
 
     $(`#Get_Page_New`).click(function(){
         result = -1;
@@ -62,6 +54,7 @@ $(document).ready(function(){
     $(`#GetFrom`).click(function(){
         GetMainPost();
     });
+
 });
 
 let Forum_Posts = [];
@@ -76,15 +69,19 @@ function GetPosts(pagenum){
             $("#Posts").remove();
             $("#Posts-Container").append(`<div id="Posts"></div>`);
             Forum_Posts = JSON.parse(data);
+            Current_Page = Forum_Posts;
             if(Forum_Posts.length == 0){
                 alert("No Pages Left");
                 return 0;
             }
+            Card_Numbers = 0;
+            console.log(Current_Page);
             for(Indv of Forum_Posts){
                 //console.log(Indv);
                 ParseUsername(Indv);
                 test = DetectScipts(Indv);
                 createCards(test,"Posts");
+                Card_Numbers++;
             }
             console.log(Forum_Posts);
             LoadUsers();
@@ -113,6 +110,8 @@ function GetMainPost(){
     return 1;
 }
 
+
+
 function DetectScipts(info){
     postinfo = JSON.parse(JSON.stringify(info));
     for(some in info){
@@ -127,16 +126,46 @@ function DetectScipts(info){
     return postinfo;
 }
 
-
+let Card_Numbers = 0;
 function createCards(info,base){
     $(`#${base}`).append(`
-        <div id = "${sanitizeString(info.id)}" class = "PostBlock"></div>    
+        <div id = "${sanitizeString(info.id)}" class = "card"></div>    
     `);
     $(`#${info.id}`).append(`
-    <p>${sanitizeString(info.post)}</p>
+    <div id = ${info.id}>
+    <p class = "card-title">${sanitizeString(info.post)}</p>
     <p>User: ${sanitizeString(info.user)}   Date: ${sanitizeString(info.date)}    ID: ${sanitizeString(info.id)}</p>
+    </div>
+    <div class = "Post_Buttons"> 
+    <button class = "btn btn-primary" onclick = "ReplyPost(${parseInt(info.id)})">Reply</button>
+    <button class  = "btn btn-primary" onclick = "DeletePost(${parseInt(info.id)})">Delete</button>
+    <button class  = "btn btn-primary" onclick = "LoadReplies(${Current_Page},)">GetReplies</button>
+    </div>
     `);
+}
 
+function LoadReplies(PostIndex){
+    console.log(Post)
+}
+
+
+function UpdateUserDataText(){
+    $(`#User_Name`).text(`Name: ${sanitizeString2(UserData.username)}`);
+    $(`#User_ID`).text(`ID: ${UserData.id}`);
+}
+
+function ReplyPost(PostID){
+    PostTextinfo =  $("#Post_Area").val();
+    UserID = parseInt(UserData.id);
+    console.log(UserID);
+    $.ajax({
+        url:`http://hyeumine.com/forumReplyPost.php`,
+        method:"Get",
+        data:{user_id:UserID,post_id:PostID,reply:PostTextinfo},
+        success:(data)=>{
+            console.log(data);
+        }
+    });
 }
 
 let UserData;
@@ -154,9 +183,9 @@ function CreateUser(){
             UserData = JSON.parse(data);
             console.log(UserData);
             console.log(data);
+            UpdateUserDataText();
         }
     });
-    UserData
 }
 
 function Login(){
@@ -181,6 +210,7 @@ function Login(){
             console.log("Login-Successfull");
             console.log(res);
             UserData = res.user;
+            UpdateUserDataText();
         }
     });
     console.log("AJAX DONE -------");
@@ -228,12 +258,13 @@ function PostTextParse(num,x,z){
     });
 }
 
-function DeletePost(){
+function DeletePost(PostID){
     PostTextx = toString($("#Post_Area").val());
+    console.log(PostID);
     $.ajax({
-        url:`http://hyeumine.com/ forumDeletePost.php`,
+        url:`http://hyeumine.com/forumDeletePost.php`,
         method:"Post",
-        data:{id:1},
+        data:{id:parseInt(PostID)},
         success:(data)=>{
             console.log(data);
         }
@@ -260,7 +291,7 @@ function LoadUsers(){
     $("#UserList").append(`<form id="AllUsers"></form>`);
     for(ui in UserList){
         $(`#AllUsers`).append(`
-            <div id="${ui}"><input type="checkbox" id="cb_${ui}"></div>
+            <div id="${ui}" class = "UserBlock"><input type="checkbox" id="cb_${ui}"></div>
         `);
         $(`#${ui}`).append(`
             <label for="cb_${ui}">${sanitizeString2(UserList[ui])}</label>

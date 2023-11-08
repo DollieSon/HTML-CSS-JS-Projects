@@ -6,17 +6,10 @@
     <title>Document</title>
     <script src="Jquerry.min.js"></script>
     <link rel="stylesheet" href="Styler.css" />
+    <link rel="stylesheet" href="bootstrap.min.css" />
   </head>
   <body>
-    <div id="Top Buttons">
-      <button id="Get_Posts">Get Posts</button>
-      <button id="Create_User">Create User</button>
-      <button id="Login">Login</button>
-      <input type="text" id="uname" placeholder="Enter Username" />
-      <textarea id="Post_Area" placeholder="Input Post"></textarea>
-      <button id="Send_Post">Post Post</button>
-      <button id="Delete_Post">Delete Post</button>
-    </div>
+    <div id="Top Buttons"></div>
     <div id="Posts_Section"></div>
     <div id="User_Info"></div>
     <div id="Content">
@@ -25,6 +18,9 @@
           <h2>USER</h2>
           <p id="User_Name">Name:</p>
           <p id="User_ID">ID:</p>
+          <button id="Create_User">Create User</button>
+          <button id="Login">Login</button>
+          <input type="text" id="uname" placeholder="Enter Username" />
         </div>
         <div id="Pages">
           <button id="Get_Page_New">Get New Page</button>
@@ -36,19 +32,23 @@
           <h2>Posts</h2>
         </div>
         <div id="Posts-Container"></div>
-        <div id="Create_Post"></div>
+        <div id="Create_Post">
+          <textarea id="Post_Area" placeholder="Input Post"></textarea>
+          <button id="Send_Post">Post To Forum</button>
+          <button id="Post_All">Post As All User</button>
+        </div>
       </div>
       <div id="RightSide">
-        <h2>Users</h2>
+        <h3>Users</h3>
         <div id="UserList"></div>
       </div>
     </div>
     <button id="collect_data">Collect Users</button>
-    <button id="Post_All">Post To All</button>
     <button id="infposts">Get ALL users</button>
     <button id="LoadUsers">Load Users</button>
     <button id="GetFrom">Get Global</button>
     <div id="Download-Data"></div>
     <script src="BackEnd.js"></script>
+    <script src="bootstrap.min.js"></script>
   </body>
 </html>
