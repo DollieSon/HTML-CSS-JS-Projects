@@ -1,6 +1,7 @@
 let Pages = 0;
 let List_Users;
 let UserList = {};
+let GeneratedTexts = [];
 $(document).ready(function(){
     $("#Get_Posts").click(function(){
         console.log("Sending");
@@ -199,10 +200,11 @@ function PostText(num){
 
 function AntiBotPost(num){
     PostTextinfo =  $("#Post_Area").val();
+    toPost = randomString(10);
     $.ajax({
         url:`http://hyeumine.com/forumNewPost.php`,
         method:"Post",
-        data:{id:parseInt(num),post:randomString(10)},
+        data:{id:parseInt(num),post:toPost},
         success:(data)=>{
             console.log(data);
         }
@@ -247,8 +249,8 @@ function sanitizeString2(input) {
     return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/,/g, '&#44;').replace(/\./g, '.').replace(/@/g, 'q').replace(/ /g, '-');
 }
 function ParseUsername(postList){
-    if(!(Object.keys(UserList).includes(postList.user))){
-        UserList[postList.user] = postList.uid;
+    if(!(Object.keys(UserList).includes(postList.uid))){
+        UserList[postList.uid] = postList.user;
     }
 }
 
@@ -256,14 +258,12 @@ function LoadUsers(){
     sanitized = "";
     $("#AllUsers").remove();
     $("#UserList").append(`<form id="AllUsers"></form>`);
-    for(user of Object.keys(UserList)){
-        console.log(user);
-        sanitized = sanitizeString2(user);
+    for(ui in UserList){
         $(`#AllUsers`).append(`
-            <div id="${UserList[user]}"><input type="checkbox" id="cb_${sanitized}"></div>
+            <div id="${ui}"><input type="checkbox" id="cb_${ui}"></div>
         `);
-        $(`#${UserList[user]}`).append(`
-            <label for="cb_${sanitized}">${sanitized}</label>
+        $(`#${ui}`).append(`
+            <label for="cb_${ui}">${sanitizeString2(UserList[ui])}</label>
         `);
     }
 }
@@ -298,7 +298,7 @@ function InfinatePosts(){
     x = 1;
     reps = 0;
     function RepeatFunction(){
-        Uvals = Object.values(UserList).map(Number);
+        Uvals = Object.keys(UserList).map(Number);
         while(Uvals.includes(x)){
             console.log(`${x} already Exists`);
             x++;
@@ -309,12 +309,12 @@ function InfinatePosts(){
         console.log(reps);
         if(reps >= bound_reps){
             clearInterval(MyID);
-            downloadList();
+            downloadList(UserList);
             alert("Scrapping Done");
         }if(reps%10 == 0){
             GetMainPost();
         }if(reps%100 == 0){
-            downloadList();
+            downloadList(UserList);
         }
     }
     MyID = setInterval(RepeatFunction,3000);
