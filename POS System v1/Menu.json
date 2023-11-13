@@ -1,0 +1,22 @@
+[
+    {
+        "Name":"Cappuccino [Hot/Iced]",
+        "Price":98
+    },
+    {
+        "Name":"Matcha [Hot/Iced]",
+        "Price":85
+    },
+    {
+        "Name":"Spanish Latte [Hot/Iced]",
+        "Price":115
+    },
+    {
+        "Name":"Strawberry Ade",
+        "Price":112
+    },
+    {
+        "Name":"Strawberry Milk",
+        "Price":99
+    }
+]

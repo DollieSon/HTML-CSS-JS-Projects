@@ -1,0 +1,78 @@
+#MainTop,#Right,#Left,#Mid{
+    display: flex;
+
+}
+
+#MainTop{
+    flex-direction: row;
+    height: 70%;
+}
+#Right,#Left,#Mid{
+    flex-direction: column;
+}
+
+#Right{
+    width:20%;
+}
+#Mid{
+    width:60%;
+}
+#Left{
+    width:20%;
+
+}
+
+
+#MainContent{
+    height: 100vh;
+    border: 2px solid black;
+}
+.Changecard{
+    display: flex;
+    justify-content: space-between;
+}
+.Changecard button{
+    width: 40%;
+}
+
+.menucard{
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Price{
+    display: flex;
+    align-content: center;
+    width: 30%;
+}
+
+.OrderClass{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.OrderName{
+    width:50% ;
+}
+.OrderIPrice{
+    width: 10%;
+}
+.OrderCount{
+    width: 10%;
+}
+.OrderTotal{
+    width: 10%;
+}
+.Orderbtn{
+    width: 10%;
+}
+
+.MiniBtn{
+    width: 30%;
+}
+
+#MainBot{
+    height: 25%;
+    overflow-y: auto;
+    overflow-x: hidden ;
+}

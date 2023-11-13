@@ -44,7 +44,6 @@ $(document).ready(function(){
     $(`#LoadUsers`).click(function(){
         $.getJSON(`Users.json`,function(PureJSON){
             UserList = PureJSON;
-            LoadUsers();
         }).done(function(){
             console.log("Done");
             LoadUsers();

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="Jquerry.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <link rel="stylesheet" href="Styles.css" />
+  </head>
+  <body>
+    <div id="MainContent">
+      <div id="Header">POS Ver.1</div>
+      <div id="MainTop">
+        <div id="Left">
+          <p>Choices:</p>
+        </div>
+        <div id="Mid">
+          <p>Order Info</p>
+          <div id="OrderBox"></div>
+          <p id="Total">Total:</p>
+          <button id="Clearbtn">Clear All</button>
+        </div>
+        <div id="Right">
+          <p id="Changep">Change</p>
+          <div class="Changecard" id="C1000">
+            <p>1000</p>
+            <button>0</button>
+          </div>
+          <div class="Changecard" id="C500">
+            <p>500</p>
+            <button>0</button>
+          </div>
+          <div class="Changecard" id="C200">
+            <p>200</p>
+            <button>0</button>
+          </div>
+          <div class="Changecard" id="C100">
+            <p>100</p>
+            <button>0</button>
+          </div>
+          <div class="Changecard" id="C50">
+            <p>50</p>
+            <button>0</button>
+          </div>
+          <div class="Changecard" id="C20">
+            <p>20</p>
+            <button>0</button>
+          </div>
+          <div class="Changecard" id="Ccustom">
+            <input type="number" id="Customin" />
+            <button id="Custombtn">Set Custom</button>
+          </div>
+          <p id="CustomCost"></p>
+        </div>
+      </div>
+      <div id="MainBot">
+        <button id="ResetOutput">Reset Output</button>
+        <p id="OutputP">Output:</p>
+      </div>
+    </div>
+    <script src="BackEnd.js"></script>
+    <script src="bootstrap.min.js"></script>
+  </body>
+</html>
