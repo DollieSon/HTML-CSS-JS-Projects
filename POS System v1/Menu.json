@@ -1,22 +1,102 @@
 [
     {
-        "Name":"Cappuccino [Hot/Iced]",
-        "Price":98
+        "Name":"Large Munchkins",
+        "Price":20
     },
     {
-        "Name":"Matcha [Hot/Iced]",
+        "Name":"Crinkles",
+        "Price":17
+    },
+    {
+        "Name":"Rocky Road Brownies",
+        "Price":48
+    },
+    {
+        "Name":"Americano [Hot/Iced]",
         "Price":85
     },
     {
+        "Name":"Cappuccino [Hot/Iced]",
+        "Price":95
+    },
+    {
+        "Name":"Latte [Hot/Iced]",
+        "Price":95
+    },
+    {
+        "Name":"Caramel [Hot/Iced]",
+        "Price":99
+    },
+    {
         "Name":"Spanish Latte [Hot/Iced]",
+        "Price":109
+    },
+    {
+        "Name":"Hazelnut [Iced]",
+        "Price":119
+    },
+    {
+        "Name":"Oreo [Iced]",
+        "Price":119
+    },
+    {
+        "Name":"Mocha [Iced]",
+        "Price":119
+    },
+    {
+        "Name":"Matcha",
+        "Price":95
+    },
+    {
+        "Name":"Dirty Matcha",
+        "Price":115
+    },
+    {
+        "Name":"Strawberry",
         "Price":115
     },
     {
         "Name":"Strawberry Ade",
-        "Price":112
+        "Price":89
+    },
+    {
+        "Name":"Blueberry Ade",
+        "Price":89
+    },
+    {
+        "Name":"Lychee Ade",
+        "Price":89
+    },
+    {
+        "Name":"Mango Ade",
+        "Price":89
+    },
+    {
+        "Name":"Hot Chocolate",
+        "Price":95
+    },
+    {
+        "Name":"Iced Chocolate",
+        "Price":95
     },
     {
         "Name":"Strawberry Milk",
-        "Price":99
+        "Price":89
+    },
+    {
+        "Name":"Blueberry Milk",
+        "Price":89
+    },
+    {
+        "Name":"Expresso Soht (Add-on)",
+        "Price":50
+    },
+    {
+        "Name":"Extra Pump Sugar",
+        "Price":10
+    },
+    {
+        "Name":"Extra Pump Hazelnut",
+        "Price":20
     }
 ]
