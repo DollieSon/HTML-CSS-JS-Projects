@@ -408,3 +408,34 @@ function randomString(length) {
     }
     return result;
   }
+
+function postDB(){
+    all_id = Object.keys(UserList);
+    all_user = Object.values(UserList);
+    console.log(all_user);
+    $.ajax({
+        type:"POST",
+        url: "http://localhost/something/serverside.php",
+        data:{User:JSON.stringify(UserList)},
+        success: function(data){
+            console.log(data);
+        },  
+        error: function(error){
+            console.log(error);
+        }
+    });
+}
+
+function fetchDB(){
+    $.ajax({
+        type:"POST",
+        url: "http://localhost/something/getUsersDB.php",
+        success: function(data){
+            console.log(JSON.parse(data));
+        },  
+        error: function(error){
+            console.log(error);
+        }
+    });
+
+}
